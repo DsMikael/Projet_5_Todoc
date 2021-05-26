@@ -1,4 +1,4 @@
-package com.cleanup.todoc.model;
+package com.cleanup.todoc.data.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,9 +24,6 @@ public class Task {
     /**
      * The name of the task
      */
-    // Suppress warning because setName is called in constructor
-    @SuppressWarnings("NullableProblems")
-    @NonNull
     private String name;
 
     /**

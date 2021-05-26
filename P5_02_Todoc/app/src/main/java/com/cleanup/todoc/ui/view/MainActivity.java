@@ -1,4 +1,4 @@
-package com.cleanup.todoc.ui;
+package com.cleanup.todoc.ui.view;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -18,8 +18,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cleanup.todoc.R;
-import com.cleanup.todoc.model.Project;
-import com.cleanup.todoc.model.Task;
+import com.cleanup.todoc.data.model.Project;
+import com.cleanup.todoc.data.model.Task;
+import com.cleanup.todoc.ui.adapter.TasksAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -75,18 +76,17 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     /**
      * The RecyclerView which displays the list of tasks
      */
-    // Suppress warning is safe because variable is initialized in onCreate
-    @SuppressWarnings("NullableProblems")
-    @NonNull
     private RecyclerView listTasks;
 
     /**
      * The TextView displaying the empty state
      */
-    // Suppress warning is safe because variable is initialized in onCreate
-    @SuppressWarnings("NullableProblems")
-    @NonNull
     private TextView lblNoTasks;
+
+    public MainActivity() {
+        listTasks = null;
+        lblNoTasks = null;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,15 +97,11 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         listTasks = findViewById(R.id.list_tasks);
         lblNoTasks = findViewById(R.id.lbl_no_task);
 
-        listTasks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        listTasks.setLayoutManager(
+                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         listTasks.setAdapter(adapter);
 
-        findViewById(R.id.fab_add_task).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAddTaskDialog();
-            }
-        });
+        findViewById(R.id.fab_add_task).setOnClickListener(view -> showAddTaskDialog());
     }
 
     @Override
@@ -253,13 +249,10 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         alertBuilder.setTitle(R.string.add_task);
         alertBuilder.setView(R.layout.dialog_add_task);
         alertBuilder.setPositiveButton(R.string.add, null);
-        alertBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                dialogEditText = null;
-                dialogSpinner = null;
-                dialog = null;
-            }
+        alertBuilder.setOnDismissListener(dialogInterface -> {
+            dialogEditText = null;
+            dialogSpinner = null;
+            dialog = null;
         });
 
         dialog = alertBuilder.create();
@@ -288,7 +281,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * Sets the data of the Spinner with projects to associate to a new task
      */
     private void populateDialogSpinner() {
-        final ArrayAdapter<Project> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, allProjects);
+        final ArrayAdapter<Project> adapter =
+                new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, allProjects);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         if (dialogSpinner != null) {
             dialogSpinner.setAdapter(adapter);

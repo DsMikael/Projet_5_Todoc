@@ -1,4 +1,4 @@
-package com.cleanup.todoc.ui;
+package com.cleanup.todoc.ui.adapter;
 
 import android.content.res.ColorStateList;
 import android.support.annotation.NonNull;
@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cleanup.todoc.R;
-import com.cleanup.todoc.model.Project;
-import com.cleanup.todoc.model.Task;
+import com.cleanup.todoc.data.model.Project;
+import com.cleanup.todoc.data.model.Task;
 
 import java.util.List;
 
@@ -38,7 +38,8 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
      *
      * @param tasks the list of tasks the adapter deals with to set
      */
-    TasksAdapter(@NonNull final List<Task> tasks, @NonNull final DeleteTaskListener deleteTaskListener) {
+    public TasksAdapter(@NonNull final List<Task> tasks,
+                        @NonNull final DeleteTaskListener deleteTaskListener) {
         this.tasks = tasks;
         this.deleteTaskListener = deleteTaskListener;
     }
@@ -48,7 +49,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
      *
      * @param tasks the list of tasks the adapter deals with to set
      */
-    void updateTasks(@NonNull final List<Task> tasks) {
+    public void updateTasks(@NonNull final List<Task> tasks) {
         this.tasks = tasks;
         notifyDataSetChanged();
     }
@@ -56,7 +57,8 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
     @NonNull
     @Override
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_task, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.item_task, viewGroup, false);
         return new TaskViewHolder(view, deleteTaskListener);
     }
 
@@ -87,7 +89,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
      *
      * @author Gaëtan HERFRAY
      */
-    class TaskViewHolder extends RecyclerView.ViewHolder {
+    static class TaskViewHolder extends RecyclerView.ViewHolder {
         /**
          * The circle icon showing the color of the project
          */

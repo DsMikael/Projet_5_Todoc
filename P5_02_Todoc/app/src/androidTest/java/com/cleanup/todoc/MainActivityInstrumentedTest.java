@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.cleanup.todoc.ui.MainActivity;
+import com.cleanup.todoc.ui.view.MainActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
