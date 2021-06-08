@@ -2,6 +2,8 @@ package com.cleanup.todoc.data.model;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -12,10 +14,12 @@ import java.util.Comparator;
  *
  * @author Gaëtan HERFRAY
  */
+@Entity(tableName = "tTtasks")
 public class Task {
     /**
      * The unique identifier of the task
      */
+    @PrimaryKey
     private long id;
 
     /**
@@ -53,10 +57,10 @@ public class Task {
      * @param creationTimestamp the timestamp when the task has been created to set
      */
     public Task(long id, long projectId, @NonNull String name, long creationTimestamp) {
-        this.setId(id);
-        this.setProjectId(projectId);
-        this.setName(name);
-        this.setCreationTimestamp(creationTimestamp);
+        this.id = id;
+        this.projectId = projectId;
+        this.name = name;
+        this.creationTimestamp = creationTimestamp;
     }
 
     /**
@@ -106,9 +110,9 @@ public class Task {
         return name;
     }
 
-//    public long getProjectId() {  return projectId; }
-//
-//    public long getCreationTimestamp() { return creationTimestamp; }
+    public long getProjectId() {  return projectId; }
+
+    public long getCreationTimestamp() { return creationTimestamp; }
 
     /**
      * Sets the name of the task.

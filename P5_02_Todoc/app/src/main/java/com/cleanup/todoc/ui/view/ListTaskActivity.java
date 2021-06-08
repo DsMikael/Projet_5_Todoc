@@ -170,8 +170,8 @@ public class ListTaskActivity extends AppCompatActivity implements TasksAdapter.
      * @param task the task to be added to the list
      */
     private void addTask(@NonNull Task task) {
-       viewModel.addTask(task);
-       updateTasks();
+        viewModel.insert(task);
+        updateTasks();
     }
 
     /**

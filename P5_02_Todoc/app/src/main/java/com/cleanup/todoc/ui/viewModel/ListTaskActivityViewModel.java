@@ -4,15 +4,18 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.cleanup.todoc.data.model.Project;
 import com.cleanup.todoc.data.model.Task;
+import com.cleanup.todoc.data.repository.ListTaskRepo;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -31,6 +34,8 @@ public class ListTaskActivityViewModel extends AndroidViewModel {
     public MutableLiveData<ArrayList<Task>> tasksLiveData = new MutableLiveData<>();
 
 
+    private final ListTaskRepo mListTaskRepo;
+    private LiveData<List<Task>> mAllTask;
     /**
      * The sort method to be used to display tasks
      */
@@ -39,10 +44,11 @@ public class ListTaskActivityViewModel extends AndroidViewModel {
 
     public ListTaskActivityViewModel(@NonNull @NotNull Application application) {
         super(application);
+        mListTaskRepo = new ListTaskRepo(application);
+        mAllTask = mListTaskRepo.getAllTasks();
 
     }
     public void refreshList() {
-        Timber.d("RefrechList");
         tasksLiveData.postValue(tasks);
     }
 
@@ -55,7 +61,6 @@ public class ListTaskActivityViewModel extends AndroidViewModel {
      * @param task the task to be added to the list
      */
     public void addTask(@NonNull Task task) {
-
         tasks.add(task);
         refreshList();
     }
@@ -81,6 +86,11 @@ public class ListTaskActivityViewModel extends AndroidViewModel {
             refreshList();
             return false;
         }
+    }
+
+    public void insert(Task task) {
+        mListTaskRepo.insert(task);
+        Timber.d(String.valueOf(task.getName()));
     }
 
 

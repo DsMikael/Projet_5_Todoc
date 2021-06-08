@@ -15,8 +15,8 @@
      - [x] Modification de la structure en MVVM.
      - [x] Correction des éventuels bugs.
      - [x] Ajout Binding.
-     - [x] Intégration ORM Room.
-     - [x] Intégration Databinding.
+     - [ ] Intégration ORM Room.
+     - [ ] Intégration Databinding.
 * [ ] Réalisation d’un modèle relationnel.
 * [ ] Réalisation d’un diagramme de classes.
 * [ ] Réalisation d’un diagramme d’utilisation
