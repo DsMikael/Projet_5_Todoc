@@ -2,9 +2,8 @@ package com.cleanup.todoc.data.model;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
 
@@ -13,34 +12,30 @@ import java.util.Comparator;
  *
  * @author Gaëtan HERFRAY
  */
-@Entity(tableName = "task")
 public class Task {
     /**
      * The unique identifier of the task
      */
-    @PrimaryKey
     private long id;
 
     /**
      * The unique identifier of the project associated to the task
      */
-    @ColumnInfo(name = "t_projectId")
     private long projectId;
 
     /**
      * The name of the task
      */
-    @ColumnInfo(name = "t_name")
     private String name;
 
     /**
      * The timestamp when the task has been created
      */
-    @ColumnInfo(name = "t_creationTimestamp")
     private long creationTimestamp;
 
+
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return "Task{" +
                 "id=" + id +
                 ", projectId=" + projectId +
@@ -111,13 +106,9 @@ public class Task {
         return name;
     }
 
-    public long getProjectId() {
-        return projectId;
-    }
-
-    public long getCreationTimestamp() {
-        return creationTimestamp;
-    }
+//    public long getProjectId() {  return projectId; }
+//
+//    public long getCreationTimestamp() { return creationTimestamp; }
 
     /**
      * Sets the name of the task.

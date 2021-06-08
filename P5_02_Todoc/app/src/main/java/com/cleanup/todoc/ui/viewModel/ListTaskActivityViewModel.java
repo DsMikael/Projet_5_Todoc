@@ -8,15 +8,11 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.cleanup.todoc.data.model.Project;
 import com.cleanup.todoc.data.model.Task;
-import com.cleanup.todoc.data.repository.ListTaskRepo;
-import com.cleanup.todoc.ui.adapter.TasksAdapter;
-import com.cleanup.todoc.ui.view.ListTaskActivity;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import timber.log.Timber;
 
@@ -34,7 +30,6 @@ public class ListTaskActivityViewModel extends AndroidViewModel {
 
     public MutableLiveData<ArrayList<Task>> tasksLiveData = new MutableLiveData<>();
 
-    private ListTaskRepo listTaskRepo;
 
     /**
      * The sort method to be used to display tasks
@@ -45,7 +40,6 @@ public class ListTaskActivityViewModel extends AndroidViewModel {
     public ListTaskActivityViewModel(@NonNull @NotNull Application application) {
         super(application);
 
-        listTaskRepo = new ListTaskRepo(application);
     }
     public void refreshList() {
         Timber.d("RefrechList");
@@ -89,24 +83,6 @@ public class ListTaskActivityViewModel extends AndroidViewModel {
         }
     }
 
-    public void insertProject(Project project){
-        listTaskRepo.insertProject(project);
-    }
-
-    public List<Project> getAllProjects(){
-        return listTaskRepo.getAllProjects();
-    }
-
-    public void insertTask(Task task){
-        listTaskRepo.insertTask(task);
-
-    }
-    public void updateTask(Task task){
-        listTaskRepo.insertTask(task);
-    }
-    public void deleteTask(Task task){
-        listTaskRepo.insertTask(task);
-    }
 
     /**
      * List of all possible sort methods for task
