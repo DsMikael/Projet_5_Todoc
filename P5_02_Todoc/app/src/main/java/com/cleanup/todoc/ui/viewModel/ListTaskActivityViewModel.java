@@ -4,7 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.cleanup.todoc.data.model.Project;
@@ -13,47 +13,38 @@ import com.cleanup.todoc.data.repository.ListTaskRepo;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import timber.log.Timber;
 
-public class ListTaskActivityViewModel extends AndroidViewModel {
-    /**
-     * List of all projects available in the application
-     */
-    public final Project[] allProjects = Project.getAllProjects();
 
+public class ListTaskActivityViewModel extends AndroidViewModel {
     /**
      * List of all current tasks of the application
      */
-    @NonNull
-    public final ArrayList<Task> tasks = new ArrayList<>();
-
-    public MutableLiveData<ArrayList<Task>> tasksLiveData = new MutableLiveData<>();
-
-
     private final ListTaskRepo mListTaskRepo;
-    private LiveData<List<Task>> mAllTask;
+    public final MediatorLiveData<List<Task>> mAllTask = new MediatorLiveData<>();
     /**
      * The sort method to be used to display tasks
      */
     @NonNull
-    public SortMethod sortMethod = SortMethod.NONE;
+    public MutableLiveData<SortMethod> sortMethod = new MutableLiveData<>(SortMethod.NONE);
 
     public ListTaskActivityViewModel(@NonNull @NotNull Application application) {
         super(application);
         mListTaskRepo = new ListTaskRepo(application);
-        mAllTask = mListTaskRepo.getAllTasks();
+        mAllTask.addSource(mListTaskRepo.getAllTasks(),tasks -> {
+            mAllTask.setValue(tasks);
+            mAllTask.postValue(checkTask());
+        });
+        mAllTask.addSource(sortMethod, sortMethod1 -> mAllTask.postValue(checkTask()));
 
     }
-    public void refreshList() {
-        tasksLiveData.postValue(tasks);
-    }
+
 
     public void onDeleteTask(Task task) {
-        tasks.remove(task);
+        mListTaskRepo.delete(task);
     }
     /**
      * Adds the given task to the list of created tasks.
@@ -61,15 +52,12 @@ public class ListTaskActivityViewModel extends AndroidViewModel {
      * @param task the task to be added to the list
      */
     public void addTask(@NonNull Task task) {
-        tasks.add(task);
-        refreshList();
+        mListTaskRepo.insert(task);
     }
 
-    public boolean checkTask() {
-        if (tasks.size() == 0) {
-            return true;
-        } else {
-            switch (sortMethod) {
+    public List<Task> checkTask() {
+        final List<Task> tasks = mAllTask.getValue();
+        switch (sortMethod.getValue()) {
                 case ALPHABETICAL:
                     Collections.sort(tasks, new Task.TaskAZComparator());
                     break;
@@ -83,16 +71,12 @@ public class ListTaskActivityViewModel extends AndroidViewModel {
                     Collections.sort(tasks, new Task.TaskOldComparator());
                     break;
             }
-            refreshList();
-            return false;
-        }
+            return tasks;
     }
 
-    public void insert(Task task) {
-        mListTaskRepo.insert(task);
-        Timber.d(String.valueOf(task.getName()));
+    public static Project[] getAllProjects() {
+        return Project.getAllProjects();
     }
-
 
     /**
      * List of all possible sort methods for task

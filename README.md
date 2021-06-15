@@ -9,14 +9,15 @@
 * Tests instrumentalisés : null.
 * État des tests : null.
 
-### À faire ![](https://progress-bar.dev/30/?scale=100&width=200)
+### À faire ![](https://progress-bar.dev/40/?scale=100&width=200)
 
 * [x] Code de l'application.
      - [x] Modification de la structure en MVVM.
      - [x] Correction des éventuels bugs.
      - [x] Ajout Binding.
-     - [ ] Intégration ORM Room.
-     - [ ] Intégration Databinding.
+     - [x] Intégration Databinding.
+     - [x] Intégration ORM Room.
+     - [ ] Convertion des models en données.
 * [ ] Réalisation d’un modèle relationnel.
 * [ ] Réalisation d’un diagramme de classes.
 * [ ] Réalisation d’un diagramme d’utilisation

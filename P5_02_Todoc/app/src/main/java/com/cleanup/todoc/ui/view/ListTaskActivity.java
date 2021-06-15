@@ -71,13 +71,24 @@ public class ListTaskActivity extends AppCompatActivity implements TasksAdapter.
         binding.listTasks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
         binding.fabAddTask.setOnClickListener(v -> showAddTaskDialog());
 
+            viewModel.mAllTask.observe(this, tasks -> {
+                if (tasks != null) {
+                    Timber.d("Observe Task%s", tasks.size());
+                }
+            });
+
         observeTAsks();
     }
 
     private void observeTAsks() {
-        Timber.d("observeTAsks");
-        viewModel.tasksLiveData.observe(this,
-                tasks -> binding.listTasks.setAdapter(new TasksAdapter(tasks, this)));
+        viewModel.mAllTask.observe(this,
+                tasks -> {
+                    if(tasks != null) {
+                        binding.listTasks.setAdapter(new TasksAdapter(tasks, this));
+                        updateTasks(tasks.size());
+                    }
+                }
+        );
     }
 
     @Override
@@ -91,15 +102,14 @@ public class ListTaskActivity extends AppCompatActivity implements TasksAdapter.
         int id = item.getItemId();
 
         if (id == R.id.filter_alphabetical) {
-            viewModel.sortMethod = ListTaskActivityViewModel.SortMethod.ALPHABETICAL;
+            viewModel.sortMethod.setValue(ListTaskActivityViewModel.SortMethod.ALPHABETICAL);
         } else if (id == R.id.filter_alphabetical_inverted) {
-            viewModel.sortMethod = ListTaskActivityViewModel.SortMethod.ALPHABETICAL_INVERTED;
+            viewModel.sortMethod.setValue(ListTaskActivityViewModel.SortMethod.ALPHABETICAL_INVERTED);
         } else if (id == R.id.filter_oldest_first) {
-            viewModel.sortMethod = ListTaskActivityViewModel.SortMethod.OLD_FIRST;
+            viewModel.sortMethod.setValue(ListTaskActivityViewModel.SortMethod.OLD_FIRST);
         } else if (id == R.id.filter_recent_first) {
-            viewModel.sortMethod = ListTaskActivityViewModel.SortMethod.RECENT_FIRST;
+            viewModel.sortMethod.setValue(ListTaskActivityViewModel.SortMethod.RECENT_FIRST);
         }
-        updateTasks();
         return super.onOptionsItemSelected(item);
     }
 
@@ -136,7 +146,7 @@ public class ListTaskActivity extends AppCompatActivity implements TasksAdapter.
                         new Date().getTime()
                 );
 
-                addTask(task);
+                viewModel.addTask(task);
                 dialogInterface.dismiss();
             }
             // If name has been set, but project has not been set (this should never occur)
@@ -165,20 +175,11 @@ public class ListTaskActivity extends AppCompatActivity implements TasksAdapter.
     }
 
     /**
-     * Adds the given task to the list of created tasks.
-     *
-     * @param task the task to be added to the list
-     */
-    private void addTask(@NonNull Task task) {
-        viewModel.insert(task);
-        updateTasks();
-    }
-
-    /**
      * Updates the list of tasks in the UI
+     * @param size
      */
-    private void updateTasks() {
-        if(viewModel.checkTask()){
+    private void updateTasks(int size) {
+        if(size == 0){
             binding.lblNoTask.setVisibility(View.VISIBLE);
             binding.listTasks.setVisibility(View.GONE);
         }else{
@@ -218,14 +219,13 @@ public class ListTaskActivity extends AppCompatActivity implements TasksAdapter.
     }
     public void onDeleteTask(Task task) {
         viewModel.onDeleteTask(task);
-        updateTasks();
     }
     /**
      * Sets the data of the Spinner with projects to associate to a new task
      */
     private void populateDialogSpinner() {
         final ArrayAdapter<Project> adapter =
-                new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, viewModel.allProjects);
+                new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, viewModel.getAllProjects());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         if (dialogSpinner != null) {
             dialogSpinner.setAdapter(adapter);
