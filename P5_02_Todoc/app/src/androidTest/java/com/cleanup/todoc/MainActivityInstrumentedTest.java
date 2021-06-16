@@ -118,5 +118,10 @@ public class MainActivityInstrumentedTest {
                 .check(matches(withText("zzz Tâche example")));
         onView(withRecyclerView(R.id.list_tasks).atPositionOnView(2, R.id.lbl_task_name))
                 .check(matches(withText("aaa Tâche example")));
+
+        // Delete elements
+        onView(withRecyclerView(R.id.list_tasks).atPositionOnView(2, R.id.img_delete)).perform(click());
+        onView(withRecyclerView(R.id.list_tasks).atPositionOnView(1, R.id.img_delete)).perform(click());
+        onView(withRecyclerView(R.id.list_tasks).atPositionOnView(0, R.id.img_delete)).perform(click());
     }
 }
