@@ -16,9 +16,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-import timber.log.Timber;
-
-
 public class ListTaskActivityViewModel extends AndroidViewModel {
     /**
      * List of all current tasks of the application
@@ -34,14 +31,9 @@ public class ListTaskActivityViewModel extends AndroidViewModel {
     public ListTaskActivityViewModel(@NonNull @NotNull Application application) {
         super(application);
         mListTaskRepo = new ListTaskRepo(application);
-        mAllTask.addSource(mListTaskRepo.getAllTasks(),tasks -> {
-            mAllTask.setValue(tasks);
-            mAllTask.postValue(checkTask());
-        });
+        mAllTask.addSource(mListTaskRepo.getAllTasks(), mAllTask::postValue);
         mAllTask.addSource(sortMethod, sortMethod1 -> mAllTask.postValue(checkTask()));
-
     }
-
 
     public void onDeleteTask(Task task) {
         mListTaskRepo.delete(task);
@@ -56,26 +48,29 @@ public class ListTaskActivityViewModel extends AndroidViewModel {
     }
 
     public List<Task> checkTask() {
-        final List<Task> tasks = mAllTask.getValue();
-        switch (sortMethod.getValue()) {
-                case ALPHABETICAL:
-                    Collections.sort(tasks, new Task.TaskAZComparator());
-                    break;
-                case ALPHABETICAL_INVERTED:
-                    Collections.sort(tasks, new Task.TaskZAComparator());
-                    break;
-                case RECENT_FIRST:
-                    Collections.sort(tasks, new Task.TaskRecentComparator());
-                    break;
-                case OLD_FIRST:
-                    Collections.sort(tasks, new Task.TaskOldComparator());
-                    break;
-            }
-            return tasks;
+        List<Task> tasks = mAllTask.getValue();
+        SortMethod mFilter = sortMethod.getValue();
+        if (mFilter != null && tasks != null) {
+            switch (mFilter) {
+                    case ALPHABETICAL:
+                        Collections.sort(tasks, new Task.TaskAZComparator());
+                        break;
+                    case ALPHABETICAL_INVERTED:
+                        Collections.sort(tasks, new Task.TaskZAComparator());
+                        break;
+                    case RECENT_FIRST:
+                        Collections.sort(tasks, new Task.TaskRecentComparator());
+                        break;
+                    case OLD_FIRST:
+                        Collections.sort(tasks, new Task.TaskOldComparator());
+                        break;
+                }
+        }
+        return tasks;
     }
 
-    public static Project[] getAllProjects() {
-        return Project.getAllProjects();
+    public List<Project> getAllProjects() {
+        return mListTaskRepo.getAllProject();
     }
 
     /**
@@ -103,5 +98,4 @@ public class ListTaskActivityViewModel extends AndroidViewModel {
          */
         NONE
     }
-
 }

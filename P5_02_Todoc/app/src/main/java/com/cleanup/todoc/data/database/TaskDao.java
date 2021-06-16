@@ -22,4 +22,10 @@ public interface TaskDao {
     @Query("SELECT * FROM tTasks ")
     LiveData<List<Task>> getAllTask();
 
+    @Query("SELECT * FROM tTasks WHERE name LIKE :name")
+    Task findByName(String name);
+
+    @Query("SELECT * FROM tTasks")
+    List<Task> getAllTaskTest();
+
 }

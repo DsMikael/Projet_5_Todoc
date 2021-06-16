@@ -14,28 +14,16 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import timber.log.Timber;
-
 public class ListTaskRepo {
     private final TaskDao taskDao;
     private final ProjectDao projectDao;
-    private final LiveData<List<Task>> allTasks;
-    private final Project[] allProjects;
 
     private final Executor executor = Executors.newSingleThreadExecutor();
 
     public ListTaskRepo(Application application){
         TaskDatabase taskDatabase = TaskDatabase.getInstance(application);
-
-        taskDao = taskDatabase.taskDao();
         projectDao = taskDatabase.projectDao();
-        allTasks = taskDao.getAllTask();
-        allProjects = Project.getAllProjects();
-//        if (allProjects.size() == 0){
-//            insertProject();
-//        }
-        Timber.d(String.valueOf(projectDao.getAllProject()));
-
+        taskDao = taskDatabase.taskDao();
     }
 
     public void insert(Task task){
@@ -47,18 +35,8 @@ public class ListTaskRepo {
     }
 
     public LiveData<List<Task>> getAllTasks(){
-        return allTasks;
+        return taskDao.getAllTask();
     }
 
-    public void insertProject(){
-            executor.execute(() -> projectDao.insert(
-                    new Project(1L, "Projet Tartampion", 0xFFEADAD1)));
-            executor.execute(() -> projectDao.insert(
-                    new Project(2L, "Projet Lucidia", 0xFFB4CDBA)));
-            executor.execute(() -> projectDao.insert(
-                    new Project(3L, "Projet Circus", 0xFFA3CED2)));
-    }
-
- //   public List<Project> getAllProject() { return allProjects; }
-
+    public List<Project> getAllProject() { return projectDao.getAllProject(); }
 }

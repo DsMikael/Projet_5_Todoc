@@ -3,6 +3,7 @@ package com.cleanup.todoc.data.model;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -27,8 +28,8 @@ public class Task {
     /**
      * The unique identifier of the project associated to the task
      */
-    @ColumnInfo(name = "projectId")
-    private long projectId;
+    @Embedded
+    private Project project;
 
     /**
      * The name of the task
@@ -47,7 +48,7 @@ public class Task {
     public @NotNull String toString() {
         return "Task{" +
                 "id=" + id +
-                ", projectId=" + projectId +
+                ", project=" + project +
                 ", name='" + name + '\'' +
                 ", creationTimestamp=" + creationTimestamp +
                 '}';
@@ -57,13 +58,13 @@ public class Task {
      * Instantiates a new Task.
      *
      * @param id                the unique identifier of the task to set
-     * @param projectId         the unique identifier of the project associated to the task to set
+     * @param project         the unique identifier of the project associated to the task to set
      * @param name              the name of the task to set
      * @param creationTimestamp the timestamp when the task has been created to set
      */
-    public Task(long id, long projectId, @NonNull String name, long creationTimestamp) {
+    public Task(long id, Project project, @NonNull String name, long creationTimestamp) {
         this.id = id;
-        this.projectId = projectId;
+        this.project = project;
         this.name = name;
         this.creationTimestamp = creationTimestamp;
     }
@@ -89,10 +90,10 @@ public class Task {
     /**
      * Sets the unique identifier of the project associated to the task.
      *
-     * @param projectId the unique identifier of the project associated to the task to set
+     * @param project the unique identifier of the project associated to the task to set
      */
-    private void setProjectId(long projectId) {
-        this.projectId = projectId;
+    private void setProject(Project project) {
+        this.project = project;
     }
 
     /**
@@ -102,7 +103,7 @@ public class Task {
      */
     @Nullable
     public Project getProject() {
-        return Project.getProjectById(projectId);
+        return project;
     }
 
     /**
@@ -114,8 +115,6 @@ public class Task {
     public String getName() {
         return name;
     }
-
-    public long getProjectId() {  return projectId; }
 
     public long getCreationTimestamp() { return creationTimestamp; }
 

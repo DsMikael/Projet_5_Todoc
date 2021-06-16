@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -25,6 +26,7 @@ import com.cleanup.todoc.ui.adapter.TasksAdapter;
 import com.cleanup.todoc.ui.viewModel.ListTaskActivityViewModel;
 
 import java.util.Date;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -136,12 +138,10 @@ public class ListTaskActivity extends AppCompatActivity implements TasksAdapter.
             }
             // If both project and name of the task have been set
             else if (taskProject != null) {
-                // TODO: Replace this by id of persisted task
-                long id = (long) (Math.random() * 50000);
 
                 Task task = new Task(
-                        id,
-                        taskProject.getId(),
+                        0,
+                        taskProject,
                         taskName,
                         new Date().getTime()
                 );

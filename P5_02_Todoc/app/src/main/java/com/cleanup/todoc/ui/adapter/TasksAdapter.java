@@ -14,8 +14,6 @@ import com.cleanup.todoc.databinding.ItemTaskBinding;
 
 import java.util.List;
 
-import timber.log.Timber;
-
 /**
  * <p>Adapter which handles the list of tasks to display in the dedicated RecyclerView.</p>
  *
@@ -32,7 +30,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
      * The listener for when a task needs to be deleted
      */
     @NonNull
-    private  DeleteTaskListener deleteTaskListener;
+    private final DeleteTaskListener deleteTaskListener;
 
     /**
      * Instantiates a new TasksAdapter.
