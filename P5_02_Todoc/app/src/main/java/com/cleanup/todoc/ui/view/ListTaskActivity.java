@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -26,7 +25,6 @@ import com.cleanup.todoc.ui.adapter.TasksAdapter;
 import com.cleanup.todoc.ui.viewModel.ListTaskActivityViewModel;
 
 import java.util.Date;
-import java.util.List;
 
 import timber.log.Timber;
 
@@ -79,10 +77,10 @@ public class ListTaskActivity extends AppCompatActivity implements TasksAdapter.
                 }
             });
 
-        observeTAsks();
+        observeTasks();
     }
 
-    private void observeTAsks() {
+    private void observeTasks() {
         viewModel.mAllTask.observe(this,
                 tasks -> {
                     if(tasks != null) {

@@ -6,6 +6,7 @@ import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.cleanup.todoc.data.database.ProjectDao;
 import com.cleanup.todoc.data.database.TaskDao;
 import com.cleanup.todoc.data.database.TaskDatabase;
 import com.cleanup.todoc.data.model.Project;
@@ -19,14 +20,14 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 import java.util.Date;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 
 @RunWith (AndroidJUnit4.class)
 public class DatabaseInstrumentedTest {
     private TaskDao taskDao;
+    private ProjectDao projectDao;
     private TaskDatabase database;
 
     @Before
@@ -34,6 +35,7 @@ public class DatabaseInstrumentedTest {
         Context context = ApplicationProvider.getApplicationContext();
         database = Room.inMemoryDatabaseBuilder(context, TaskDatabase.class).build();
         taskDao = database.taskDao();
+        projectDao = database.projectDao();
     }
 
     @After
@@ -47,11 +49,18 @@ public class DatabaseInstrumentedTest {
         Task task = new Task(0, project,"test2", new Date().getTime());
 
         taskDao.insert(task);
+        projectDao.insertTest(project);
+
+        assertEquals(1, projectDao.getAllProject().size());
+
         Task tNameTask = taskDao.findByName(task.getName());
-        assertThat(tNameTask.getName(), equalTo(task.getName()));
+        assertEquals(tNameTask.getName(), task.getName());
 
         taskDao.delete(task);
         assertFalse(taskDao.getAllTaskTest().contains(task.getName()));
+
+
+
 
     }
 }

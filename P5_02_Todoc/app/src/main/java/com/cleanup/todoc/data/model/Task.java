@@ -43,7 +43,6 @@ public class Task {
     @ColumnInfo(name = "creationTimestamp")
     private long creationTimestamp;
 
-
     @Override
     public @NotNull String toString() {
         return "Task{" +
