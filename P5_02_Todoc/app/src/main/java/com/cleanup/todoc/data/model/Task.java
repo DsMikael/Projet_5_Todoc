@@ -6,6 +6,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.RoomWarnings;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -23,25 +24,26 @@ public class Task {
      */
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "tId")
-    private long id;
+    private final long id;
 
     /**
      * The unique identifier of the project associated to the task
      */
+    @SuppressWarnings(RoomWarnings.PRIMARY_KEY_FROM_EMBEDDED_IS_DROPPED)
     @Embedded
-    private Project project;
+    private final Project project;
 
     /**
      * The name of the task
      */
     @ColumnInfo(name = "name")
-    private String name;
+    private final String name;
 
     /**
      * The timestamp when the task has been created
      */
     @ColumnInfo(name = "creationTimestamp")
-    private long creationTimestamp;
+    private final long creationTimestamp;
 
     @Override
     public @NotNull String toString() {
@@ -78,24 +80,6 @@ public class Task {
     }
 
     /**
-     * Sets the unique identifier of the task.
-     *
-     * @param id the unique idenifier of the task to set
-     */
-    private void setId(long id) {
-        this.id = id;
-    }
-
-    /**
-     * Sets the unique identifier of the project associated to the task.
-     *
-     * @param project the unique identifier of the project associated to the task to set
-     */
-    private void setProject(Project project) {
-        this.project = project;
-    }
-
-    /**
      * Returns the project associated to the task.
      *
      * @return the project associated to the task
@@ -116,24 +100,6 @@ public class Task {
     }
 
     public long getCreationTimestamp() { return creationTimestamp; }
-
-    /**
-     * Sets the name of the task.
-     *
-     * @param name the name of the task to set
-     */
-    private void setName(@NonNull String name) {
-        this.name = name;
-    }
-
-    /**
-     * Sets the timestamp when the task has been created.
-     *
-     * @param creationTimestamp the timestamp when the task has been created to set
-     */
-    private void setCreationTimestamp(long creationTimestamp) {
-        this.creationTimestamp = creationTimestamp;
-    }
 
     /**
      * Comparator to sort task from A to Z

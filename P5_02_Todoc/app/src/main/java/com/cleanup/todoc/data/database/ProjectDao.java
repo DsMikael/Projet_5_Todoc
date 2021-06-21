@@ -5,7 +5,6 @@ import androidx.room.Insert;
 import androidx.room.Query;
 
 import com.cleanup.todoc.data.model.Project;
-import com.cleanup.todoc.data.model.Task;
 
 import java.util.List;
 

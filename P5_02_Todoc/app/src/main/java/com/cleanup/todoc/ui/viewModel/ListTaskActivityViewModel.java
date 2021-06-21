@@ -62,7 +62,8 @@ public class ListTaskActivityViewModel extends AndroidViewModel {
                         Collections.sort(tasks, new Task.TaskRecentComparator());
                         break;
                     case OLD_FIRST:
-                        Collections.sort(tasks, new Task.TaskOldComparator());
+                        Collections
+                                .sort(tasks, new Task.TaskOldComparator());
                         break;
                 }
         }

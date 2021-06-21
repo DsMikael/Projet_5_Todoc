@@ -68,7 +68,8 @@ public class ListTaskActivity extends AppCompatActivity implements TasksAdapter.
         viewModel = new ViewModelProvider(this,
                 new ViewModelProvider.AndroidViewModelFactory(getApplication()))
                                      .get(ListTaskActivityViewModel.class);
-        binding.listTasks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
+        binding.listTasks.setLayoutManager(new LinearLayoutManager(this,
+                LinearLayoutManager.VERTICAL,false));
         binding.fabAddTask.setOnClickListener(v -> showAddTaskDialog());
 
             viewModel.mAllTask.observe(this, tasks -> {
