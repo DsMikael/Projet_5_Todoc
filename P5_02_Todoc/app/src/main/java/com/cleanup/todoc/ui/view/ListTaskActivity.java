@@ -14,6 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -24,7 +27,9 @@ import com.cleanup.todoc.databinding.ActivityMainBinding;
 import com.cleanup.todoc.ui.adapter.TasksAdapter;
 import com.cleanup.todoc.ui.viewModel.ListTaskActivityViewModel;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -225,6 +230,7 @@ public class ListTaskActivity extends AppCompatActivity implements TasksAdapter.
     private void populateDialogSpinner() {
         final ArrayAdapter<Project> adapter =
                 new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, viewModel.getAllProjects());
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         if (dialogSpinner != null) {
             dialogSpinner.setAdapter(adapter);

@@ -38,5 +38,5 @@ public class ListTaskRepo {
         return taskDao.getAllTask();
     }
 
-    public List<Project> getAllProject() { return projectDao.getAllProject(); }
+    public LiveData<List<Project>> getAllProject() { return projectDao.getAllProject(); }
 }

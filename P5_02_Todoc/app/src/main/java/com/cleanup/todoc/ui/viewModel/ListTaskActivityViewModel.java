@@ -22,6 +22,7 @@ public class ListTaskActivityViewModel extends AndroidViewModel {
      */
     private final ListTaskRepo mListTaskRepo;
     public final MediatorLiveData<List<Task>> mAllTask = new MediatorLiveData<>();
+    public final MutableLiveData<List<Project>> mAllProject =new MutableLiveData<>();
     /**
      * The sort method to be used to display tasks
      */
@@ -33,6 +34,7 @@ public class ListTaskActivityViewModel extends AndroidViewModel {
         mListTaskRepo = new ListTaskRepo(application);
         mAllTask.addSource(mListTaskRepo.getAllTasks(), mAllTask::postValue);
         mAllTask.addSource(sortMethod, sortMethod1 -> mAllTask.postValue(checkTask()));
+        mAllTask.addSource(mListTaskRepo.getAllProject(),mAllProject::postValue);
     }
 
     public void onDeleteTask(Task task) {
@@ -71,7 +73,7 @@ public class ListTaskActivityViewModel extends AndroidViewModel {
     }
 
     public List<Project> getAllProjects() {
-        return mListTaskRepo.getAllProject();
+        return mAllProject.getValue();
     }
 
     /**
