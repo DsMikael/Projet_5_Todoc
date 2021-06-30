@@ -9,6 +9,6 @@ public class MyRunner extends AndroidJUnitRunner {
     @Override
     public Application newApplication(ClassLoader cl, String className, Context context)
             throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-        return super.newApplication(cl, TodocApp.class.getName(), context);
+        return super.newApplication(cl, TodocAppTest.class.getName(), context);
     }
 }

@@ -14,9 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -27,9 +24,7 @@ import com.cleanup.todoc.databinding.ActivityMainBinding;
 import com.cleanup.todoc.ui.adapter.TasksAdapter;
 import com.cleanup.todoc.ui.viewModel.ListTaskActivityViewModel;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import timber.log.Timber;
 

@@ -14,16 +14,20 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import static org.koin.java.KoinJavaComponent.inject;
+import kotlin.Lazy;
+
 public class ListTaskRepo {
+
+    private final Lazy<TaskDatabase> taskDatabase = inject(TaskDatabase.class);
     private final TaskDao taskDao;
     private final ProjectDao projectDao;
 
     private final Executor executor = Executors.newSingleThreadExecutor();
 
     public ListTaskRepo(Application application){
-        TaskDatabase taskDatabase = TaskDatabase.getInstance(application);
-        projectDao = taskDatabase.projectDao();
-        taskDao = taskDatabase.taskDao();
+        projectDao = taskDatabase.getValue().projectDao();
+        taskDao = taskDatabase.getValue().taskDao();
     }
 
     public void insert(Task task){

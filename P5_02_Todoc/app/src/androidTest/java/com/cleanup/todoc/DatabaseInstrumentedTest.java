@@ -1,9 +1,5 @@
 package com.cleanup.todoc;
 
-import android.content.Context;
-
-import androidx.room.Room;
-import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.cleanup.todoc.data.database.ProjectDao;
@@ -25,6 +21,7 @@ import kotlin.Lazy;
 import static com.cleanup.todoc.utils.LiveDataTestUtil.getOrAwaitValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.koin.java.KoinJavaComponent.inject;
 
 
 @RunWith (AndroidJUnit4.class)
@@ -32,19 +29,17 @@ public class DatabaseInstrumentedTest {
 
     private TaskDao taskDao;
     private ProjectDao projectDao;
-    private TaskDatabase database;
+    private final Lazy<TaskDatabase> database = inject(TaskDatabase.class);
 
     @Before
     public void createDb(){
-        Context context = ApplicationProvider.getApplicationContext();
-        database = Room.inMemoryDatabaseBuilder(context, TaskDatabase.class).build();
-        taskDao = database.taskDao();
-        projectDao = database.projectDao();
+        taskDao = database.getValue().taskDao();
+        projectDao = database.getValue().projectDao();
     }
 
     @After
     public void closeDb() throws IOException {
-        database.close();
+        database.getValue().close();
     }
 
     @Test

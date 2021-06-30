@@ -1,5 +1,6 @@
 package com.cleanup.todoc;
 
+import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -14,9 +15,10 @@ var ProjectDbSql = "INSERT INTO pProjects ( pId, nameProject, color ) " +
 /**
  *  Room Database definition
  */
- val appDataModule = module {
-    single {
-        var database = Room.databaseBuilder(get(), TaskDatabase::class.java, "tasks_db")
+val appDataModule = module {
+    fun appDatabase(context: Context): TaskDatabase
+    {
+        return  Room.databaseBuilder(context, TaskDatabase::class.java, "tasks_db")
                 .fallbackToDestructiveMigration()
                 .addCallback(object : RoomDatabase.Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
@@ -25,17 +27,19 @@ var ProjectDbSql = "INSERT INTO pProjects ( pId, nameProject, color ) " +
                     }
                 })
                 .build()
-
     }
 
-
+    single {
+        appDatabase(get())
+    }
 }
 /**
  * In-Memory Room Database definition
  */
 val appDataTestModule = module {
-    factory {
-        var database = Room.inMemoryDatabaseBuilder(get(), TaskDatabase::class.java)
+    fun appTestDatabase(context: Context): TaskDatabase
+    {
+        return Room.inMemoryDatabaseBuilder(context, TaskDatabase::class.java)
                 .addCallback(object : RoomDatabase.Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
@@ -43,5 +47,9 @@ val appDataTestModule = module {
                     }
                 })
                 .build()
+    }
+
+    single {
+        appTestDatabase(get())
     }
 }

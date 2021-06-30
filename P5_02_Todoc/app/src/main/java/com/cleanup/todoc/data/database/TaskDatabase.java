@@ -2,8 +2,6 @@ package com.cleanup.todoc.data.database;
 
 import android.content.Context;
 
-import static org.koin.java.KoinJavaComponent.inject;
-
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
@@ -18,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 @Database(entities = {Task.class, Project.class}, version = 1, exportSchema = false)
 public abstract class TaskDatabase extends RoomDatabase {
 
-
     public abstract TaskDao taskDao();
 
     public abstract ProjectDao projectDao();
@@ -26,7 +23,6 @@ public abstract class TaskDatabase extends RoomDatabase {
     private static TaskDatabase INSTANCE;
 
     public static TaskDatabase getInstance(Context context){
-
         if (INSTANCE == null){
             synchronized (TaskDatabase.class) {
                 if (INSTANCE == null) {
