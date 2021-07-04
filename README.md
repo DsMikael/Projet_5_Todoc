@@ -4,7 +4,7 @@
 
 * Nom de l’application : Todoc
 * Fonctionnalité :  Gestion de tâches quotidiennes.
-* Langage utilisé : Java.
+* Langage principal utilisé : Java.
 * Test unitaire : success.
 * Tests instrumentalisés : success.
 * État des tests : success.
@@ -20,6 +20,7 @@
      - [x] Intégration Databinding.
      - [x] Intégration ORM Room.
      - [x] Convertion des models en données.
+     - [x] Injection de dépendance avec KOIN.
 * [x] Réalisation d’un modèle relationnel.
 * [x] Réalisation d’un diagramme de classes.
 * [x] Réalisation d’un diagramme d’utilisation.

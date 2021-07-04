@@ -1,7 +1,5 @@
 package com.cleanup.todoc.data.repository;
 
-import android.app.Application;
-
 import androidx.lifecycle.LiveData;
 
 import com.cleanup.todoc.data.database.ProjectDao;
@@ -14,18 +12,19 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import static org.koin.java.KoinJavaComponent.inject;
 import kotlin.Lazy;
+
+import static org.koin.java.KoinJavaComponent.inject;
 
 public class ListTaskRepo {
 
-    private final Lazy<TaskDatabase> taskDatabase = inject(TaskDatabase.class);
     private final TaskDao taskDao;
     private final ProjectDao projectDao;
 
     private final Executor executor = Executors.newSingleThreadExecutor();
 
-    public ListTaskRepo(Application application){
+    public ListTaskRepo(){
+        Lazy<TaskDatabase> taskDatabase = inject(TaskDatabase.class);
         projectDao = taskDatabase.getValue().projectDao();
         taskDao = taskDatabase.getValue().taskDao();
     }

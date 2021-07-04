@@ -19,6 +19,4 @@ public class TodocAppTest extends Application {
         startKoin(koinApplication);
 
     }
-
-
 }

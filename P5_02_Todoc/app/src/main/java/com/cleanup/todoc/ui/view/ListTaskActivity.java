@@ -224,7 +224,8 @@ public class ListTaskActivity extends AppCompatActivity implements TasksAdapter.
      */
     private void populateDialogSpinner() {
         final ArrayAdapter<Project> adapter =
-                new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, viewModel.getAllProjects());
+                new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
+                        viewModel.getAllProjects());
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         if (dialogSpinner != null) {

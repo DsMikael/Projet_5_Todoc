@@ -95,7 +95,8 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
          * @param binding the view of the task item
          * @param deleteTaskListener the listener for when a task needs to be deleted to set
          */
-        public TaskViewHolder(@NonNull ItemTaskBinding binding, @NonNull DeleteTaskListener deleteTaskListener) {
+        public TaskViewHolder(@NonNull ItemTaskBinding binding,
+                              @NonNull DeleteTaskListener deleteTaskListener) {
             super(binding.getRoot());
             this.binding = binding;
             this.deleteTaskListener = deleteTaskListener;
@@ -116,7 +117,8 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
             binding.imgDelete.setTag(task);
             final Project taskProject = task.getProject();
             if (taskProject != null) {
-                binding.imgProject.setSupportImageTintList(ColorStateList.valueOf(taskProject.getColor()));
+                binding.imgProject.setSupportImageTintList(
+                        ColorStateList.valueOf(taskProject.getColor()));
                 binding.lblProjectName.setText(taskProject.getName());
                 binding.setTask(task);
             } else {

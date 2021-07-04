@@ -31,7 +31,7 @@ public class ListTaskActivityViewModel extends AndroidViewModel {
 
     public ListTaskActivityViewModel(@NonNull @NotNull Application application) {
         super(application);
-        mListTaskRepo = new ListTaskRepo(application);
+        mListTaskRepo = new ListTaskRepo();
         mAllTask.addSource(mListTaskRepo.getAllTasks(), mAllTask::postValue);
         mAllTask.addSource(sortMethod, sortMethod1 -> mAllTask.postValue(checkTask()));
         mAllTask.addSource(mListTaskRepo.getAllProject(),mAllProject::postValue);
