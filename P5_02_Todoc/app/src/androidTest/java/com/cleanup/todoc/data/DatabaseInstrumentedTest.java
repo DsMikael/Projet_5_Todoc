@@ -1,5 +1,4 @@
 package com.cleanup.todoc.data;
-
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -25,7 +24,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.koin.java.KoinJavaComponent.inject;
-
 @RunWith (AndroidJUnit4.class)
 public class DatabaseInstrumentedTest {
 
