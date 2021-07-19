@@ -26,8 +26,6 @@ import com.cleanup.todoc.ui.viewModel.ListTaskActivityViewModel;
 
 import java.util.Date;
 
-import timber.log.Timber;
-
 /**
  * <p>Home activity of the application which is displayed when the user opens the app.</p>
  * <p>Displays the list of tasks.</p>
@@ -65,18 +63,11 @@ public class ListTaskActivity extends AppCompatActivity implements TasksAdapter.
         View view = binding.getRoot();
         setContentView(view);
 
-        viewModel = new ViewModelProvider(this,
-                new ViewModelProvider.AndroidViewModelFactory(getApplication()))
+        viewModel = new ViewModelProvider(this)
                                      .get(ListTaskActivityViewModel.class);
         binding.listTasks.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL,false));
         binding.fabAddTask.setOnClickListener(v -> showAddTaskDialog());
-
-            viewModel.mAllTask.observe(this, tasks -> {
-                if (tasks != null) {
-                    Timber.d("Observe Task%s", tasks.size());
-                }
-            });
 
         observeTasks();
     }

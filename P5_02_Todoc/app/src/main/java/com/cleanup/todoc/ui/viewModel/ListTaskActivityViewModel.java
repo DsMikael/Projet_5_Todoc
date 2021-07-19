@@ -1,22 +1,18 @@
 package com.cleanup.todoc.ui.viewModel;
 
-import android.app.Application;
-
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.cleanup.todoc.data.model.Project;
 import com.cleanup.todoc.data.model.Task;
 import com.cleanup.todoc.data.repository.ListTaskRepo;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Collections;
 import java.util.List;
 
-public class ListTaskActivityViewModel extends AndroidViewModel {
+public class ListTaskActivityViewModel extends ViewModel {
     /**
      * List of all current tasks of the application
      */
@@ -29,8 +25,8 @@ public class ListTaskActivityViewModel extends AndroidViewModel {
     @NonNull
     public MutableLiveData<SortMethod> sortMethod = new MutableLiveData<>(SortMethod.NONE);
 
-    public ListTaskActivityViewModel(@NonNull @NotNull Application application) {
-        super(application);
+    public ListTaskActivityViewModel() {
+        super();
         mListTaskRepo = new ListTaskRepo();
         mAllTask.addSource(mListTaskRepo.getAllTasks(), mAllTask::postValue);
         mAllTask.addSource(sortMethod, sortMethod1 -> mAllTask.postValue(checkTask()));

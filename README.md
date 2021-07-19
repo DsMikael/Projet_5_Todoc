@@ -20,7 +20,7 @@
      - [x] Intégration Databinding.
      - [x] Intégration ORM Room.
      - [x] Convertion des models en données.
-     - [x] Injection de dépendance avec KOIN.
+     - [x] Injection de dépendance avec [KOIN](https://insert-koin.io/).
 * [x] Réalisation d’un modèle relationnel.
 * [x] Réalisation d’un diagramme de classes.
 * [x] Réalisation d’un diagramme d’utilisation.
